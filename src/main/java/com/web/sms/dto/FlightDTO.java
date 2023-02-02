@@ -1,14 +1,25 @@
 package com.web.sms.dto;
 
+import com.web.sms.validation.FlightMfdBy;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.PositiveOrZero;
 import java.util.Calendar;
 import java.util.Objects;
 
 public class FlightDTO 
 {
     private int id;
+    @NotNull
     private String flightNumber;
+    @NotNull
+    @PositiveOrZero
     private int capacity;
+    @NotNull
+    @FlightMfdBy
     private String mfdBy;
+    @NotNull
+    @Past
     private Calendar mfdOn;
 
     public int getId() {

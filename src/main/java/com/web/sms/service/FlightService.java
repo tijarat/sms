@@ -3,16 +3,15 @@ package com.web.sms.service;
 import com.web.sms.dto.FlightDTO;
 import com.web.sms.entity.Flight;
 import com.web.sms.repo.IFlightRepo;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.Spliterator;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class FlightService implements IFlightService
@@ -39,6 +38,9 @@ public class FlightService implements IFlightService
         {
             flightDto = new FlightDTO();
             BeanUtils.copyProperties(flight.get(), flightDto);
+        }else
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Flight Source Not found against ID");
         }
         return flightDto;
     }
@@ -55,7 +57,7 @@ public class FlightService implements IFlightService
            BeanUtils.copyProperties(flight, flightDto);
         }else
         {
-           //TODO
+           throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Flight Source Not found against ID");
         }
         return flightDto;
     }
@@ -70,7 +72,7 @@ public class FlightService implements IFlightService
            flightRepo.delete(flightOpt.get());
         }else
         {
-           //TODO
+           throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Flight Source Not found against ID");
         }
     }
 

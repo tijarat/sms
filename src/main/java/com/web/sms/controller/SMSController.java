@@ -1,16 +1,17 @@
 package com.web.sms.controller;
 
 import com.web.sms.dto.FlightDTO;
-import com.web.sms.entity.Flight;
-import com.web.sms.repo.IFlightRepo;
 import com.web.sms.service.IFlightService;
-import java.time.LocalDate;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Validated
 public class SMSController 
 {
 
@@ -65,7 +66,7 @@ public class SMSController
             //consumes = MediaType.TEXT_PLAIN_VALUE//, 
             //headers = "content-type=text/plain"//"content-type=text/plain" //"content-type=text/json"
         )
-    public FlightDTO getFlight(@PathVariable(name="id") int flightId)
+    public FlightDTO getFlight(@PathVariable(name="id") @Positive int flightId)
     {
         return service.getFlight(flightId);
     }    
@@ -78,7 +79,7 @@ public class SMSController
             consumes = MediaType.APPLICATION_JSON_VALUE,
             headers = "content-type=text/json"
         )    
-    public FlightDTO createFlight(@RequestBody FlightDTO flightDto)
+    public FlightDTO createFlight(@RequestBody @Valid FlightDTO flightDto)
     {
         return service.createFlight(flightDto);
     }
